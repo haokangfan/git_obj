@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>登录页面</title>
+		<% include model.ejs %>
+	<!--<script src="./js/underscore-noflect.js"></script>-->
+
+	</head>
+	<body>
+		<span><%=goLogin%></span>
+		<div id='outer' class="outer">
+			<div id='inner' class="inner">
+				<div id='logo' class="logo">logo</div>
+					<form>
+						<div class="user">
+							<input type="text" name="username" id='username' />
+							<div class="sub" id='usersub'><span>用户名</span></div>
+						</div>
+						<div class="user">
+							<input type="password" name="passwrod" id="passwrod"  />
+							<div class="sub" id='passub'><span>用户密码</span></div>
+						</div>
+						<input type="button" id="login" value="登录"><a href="javascript:;" id='signin'>注册</a>&nbsp;<a href="javascript:;" id='wjmm'>忘记密码?</a>
+						<div class="cl"></div>
+					</form>
+				
+			</div>
+		</div>
+		
+	</body>
+	<script src="./js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript">
+		var username=document.getElementById('username'),
+			passwords=document.getElementById('passwrod'),
+			login=document.getElementById('login'),
+			usersub=document.getElementById('usersub'),
+			passub=document.getElementById('passub');
+			
+		passwords.onkeyup=username.onkeyup=function(){
+				usersub.style.display=username.value==''?'block':'none';
+				passub.style.display=passwords.value==''?'block':'none';
+			}
+//		console.log(result);
+		$("#signin").click(function(){
+//			alert(1);
+			$.get('/signin',function(){
+				window.location="/signin";
+			});
+		});
+		$(login).click(function(){
+//			alert(1);
+			$.post('/select?math='+Math.random()*100,{
+				"username":$(username).val(),
+				"userpassword":$(passwords).val()
+			},function(result){
+				console.log(result);
+				
+				var jsona="";
+				if(result){
+				 jsona=JSON.parse(result);
+				}
+//				console.log(jsona);
+				alert(jsona[0].msg);
+				if(jsona[0].code==1){
+					window.location="/index";
+				}
+			})
+		})
+	</script>
+</html>

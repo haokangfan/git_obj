@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>注册</title>
+		<% include model.ejs %>
+	</head>
+	<body>
+		<div id='outer' class="outer">
+			<div id='inner' class="inner">
+				<div id='logo' class="logo">logo</div>
+					<form>
+					
+						<span>用户名：</span><div class="user">
+							<input type="text" name="username" id='username' />
+							<div class="sub"><span for="username">用户名4~8位字</span></div>
+						</div>
+						<span>用户密码：</span><div class="user">
+							<input type="password" name="passwrod" id="passwrod"  />
+							<div class="sub" ><span>用户密码必须超过6位</span></div>
+						</div>
+						<span>确认密码：</span><div class="user">
+							<input type="password" id="okPasswrod"  />
+							<div class="sub" ><span>确认密码</span></div>
+						</div>
+						<span>姓名：</span><div class="user">
+							<input type="text" name="name" id="name"/>
+							<div class="sub" ><span>输入您的真实姓名</span></div>
+						</div>
+						<span>身份证号：</span><div class="user">
+							<input type="text" name="IDcard" id="IDcard" />
+							<div class="sub" ><span>输入您的身份证号</span></div>
+						</div>
+						<input type="button" id="signin" value="注册">&nbsp;<a href="javascript:;" id='back'>返回</a>
+						<div class="cl"></div>
+					</form>
+			</div>
+		</div>
+		<script src="./js/utils.js"></script>
+		<script src="./js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript">
+			var divs=document.querySelectorAll('.user'),
+				signin=document.querySelector('#signin'),
+				back=document.querySelector('#back');
+			for(var i=0;i<divs.length;i++){
+				(function(i){
+					var child=utils.firstChild(i);
+					var lastcd=utils.lastChild(i);
+					child.onfocus=function(){
+//						console.log(i.lastChild);
+						lastcd.style.display="none";
+					}
+					child.onblur=function(){
+						lastcd.style.display=(this.value!="")?"none":"block";
+					}
+				}(divs[i]))
+			}
+			$(signin).click(function(){
+				$.post('/signin',{
+					"username":$('#username').val(),
+					"passwrod":$('#passwrod').val(),
+					"name":$("#name").val(),
+					"IDcard":$("#IDcard").val()
+				},function(result){
+					alert(result.msg);
+					if(result.code==1){
+						window.location.href='/';
+					}
+				})
+			})
+			
+		</script>
+	</body>
+</html>
