@@ -26,5 +26,5 @@ app.get('/update',router.updateEvery);
 app.get('/delete',router.deleteEvery);
 app.get('/getData',router.getData);
 app.listen(80,function(){
-	console.log("正在监听80端口");
+	console.log("正在监听80，我在线上加的内容，端口");
 })
